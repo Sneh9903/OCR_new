@@ -551,6 +551,10 @@ for filename in os.listdir(folder_path):
                     ocr = PaddleOCR(use_angle_cls=True, lang='da')
                     result = ocr.ocr(deblurred_image, cls=True)
 
+                    if result[0] is None:
+                        shutil.rmtree(output_folder)
+                        continue
+
                     texts = [line[1][0] for line in result[0]]
 
                     joined_string = " ".join(texts)
@@ -587,6 +591,10 @@ for filename in os.listdir(folder_path):
                         else:
                             ocr = PaddleOCR(use_angle_cls=True, lang='da')
                             result = ocr.ocr(image_removed_bg, cls=True)
+
+                            if result[0] is None:
+                                shutil.rmtree(output_folder)
+                                continue
 
                             texts = [line[1][0] for line in result[0]]
 
